@@ -1,5 +1,6 @@
+package PaintBoard;
+
 import java.awt.*;
-import java.awt.event.MouseMotionListener;
 
 public class LinePainter implements DrawImage {
     int x1, x2, y1, y2;

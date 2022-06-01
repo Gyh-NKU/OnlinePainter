@@ -1,10 +1,13 @@
+package PaintBoard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class MainBoard extends JPanel {
+public class MainBoard extends JPanel implements Serializable {
 
     private String mode;
 
@@ -20,11 +23,13 @@ public class MainBoard extends JPanel {
 
     private JButton undoBtn;
 
-    public void enableButton(JButton b){
+    private Eraser eraser;
+
+    public void enableButton(JButton b) {
         b.setEnabled(true);
     }
 
-    public void disableButton(JButton b){
+    public void disableButton(JButton b) {
         b.setEnabled(false);
     }
 
@@ -48,18 +53,18 @@ public class MainBoard extends JPanel {
         this.bkColor = bkColor;
     }
 
-    public void undo(){
-        if(!drawers.isEmpty()){
-            drawers.remove(drawers.size()-1);
+    public void undo() {
+        if (!drawers.isEmpty()) {
+            drawers.remove(drawers.size() - 1);
         }
-        if(drawers.isEmpty()){
+        if (drawers.isEmpty()) {
             disableButton(undoBtn);
         }
         repaint();
     }
 
-    public void clear(){
-        if(drawers.size()>0){
+    public void clear() {
+        if (drawers.size() > 0) {
             drawers = new ArrayList<>();
         }
         disableButton(undoBtn);
@@ -80,10 +85,15 @@ public class MainBoard extends JPanel {
         undoBtn = null;
     }
 
+    public MainBoard(String s){
+        this();
+        System.out.println(s);
+    }
+
     @Override
     public void paint(Graphics g1) {
         super.paint(g1);
-        if(!drawers.isEmpty() && undoBtn!=null){
+        if (!drawers.isEmpty() && undoBtn != null) {
             enableButton(undoBtn);
         }
         setBackground(bkColor);
@@ -91,7 +101,7 @@ public class MainBoard extends JPanel {
                 drawers) {
             i.draw(g1);
         }
-//        new RectPainter(0, 0, 30, 30, 1, Color.black).draw(g1);
+//        new PaintBoard.RectPainter(0, 0, 30, 30, 1, Color.black).draw(g1);
     }
 
     public Color getColor() {
@@ -125,7 +135,7 @@ public class MainBoard extends JPanel {
                             , board.weight, board.curColor));
                     break;
                 case "Line":
-                    board.drawers.add(new LinePainter(e.getX(),e.getY(),e.getX(),e.getY(),
+                    board.drawers.add(new LinePainter(e.getX(), e.getY(), e.getX(), e.getY(),
                             board.weight, board.curColor));
             }
             board.repaint();
@@ -143,15 +153,15 @@ public class MainBoard extends JPanel {
                     points.add(e.getPoint());
                     break;
                 case "Rect":
-                    RectPainter p = (RectPainter) board.drawers.get(board.drawers.size()-1);
+                    RectPainter p = (RectPainter) board.drawers.get(board.drawers.size() - 1);
                     p.setEnd(e.getPoint());
                     break;
                 case "Oval":
-                    OvalPainter op = (OvalPainter) board.drawers.get(board.drawers.size()-1);
+                    OvalPainter op = (OvalPainter) board.drawers.get(board.drawers.size() - 1);
                     op.setEnd(e.getPoint());
                     break;
                 case "Line":
-                    LinePainter lp = (LinePainter) board.drawers.get(board.drawers.size()-1);
+                    LinePainter lp = (LinePainter) board.drawers.get(board.drawers.size() - 1);
                     lp.setEnd(e.getPoint());
             }
             board.repaint();
@@ -160,6 +170,13 @@ public class MainBoard extends JPanel {
         @Override
         public void mouseReleased(MouseEvent e) {
             super.mouseReleased(e);
+        }
+    }
+
+    class Eraser implements DrawImage {
+        @Override
+        public void draw(Graphics g) {
+
         }
     }
 }

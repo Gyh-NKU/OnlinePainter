@@ -1,3 +1,5 @@
+package PaintBoard;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
@@ -5,7 +7,7 @@ import java.awt.event.*;
 
 public class PaintBoard extends JFrame{
 
-    MainBoard mainBoard;
+    public MainBoard mainBoard;
     ButtonGroup brushGroup;
     JToggleButton fpBtn;
     JToggleButton rectBtn;
@@ -22,11 +24,12 @@ public class PaintBoard extends JFrame{
     JTextField weightText;
     BasicArrowButton upButton;
     BasicArrowButton downButton;
-    PaintBoard(String title){
+    public PaintBoard(String title){
         super(title);
+//        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         setBounds(300, 50, 1000, 700);
         addWindowListener(new MyWindowsListener());
-        MainBoard mainBoard = new MainBoard();
+        mainBoard = new MainBoard();
         mainBoard.setBorder(BorderFactory.createLoweredBevelBorder());
         lineColorChooser = new JButton();
         lineColorChooser.setBackground(mainBoard.getColor());
@@ -207,8 +210,4 @@ public class PaintBoard extends JFrame{
         }
     }
 
-
-    public static void main(String[] args) {
-        PaintBoard paintBoard = new PaintBoard("画图");
-    }
 }

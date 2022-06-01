@@ -1,12 +1,19 @@
+package PaintBoard;
+
 import java.awt.*;
 
-public class OvalPainter implements DrawImage{
+public class RectPainter implements DrawImage {
     int x1, y1, x2, y2;
     int weight;
     Color color;
     boolean dashed;
 
-    public OvalPainter(int x1, int y1, int x2, int y2, int weight, Color color) {
+    public void setEnd(Point p){
+        x2 = p.x;
+        y2 = p.y;
+    }
+
+    public RectPainter(int x1, int y1, int x2, int y2, int weight, Color color) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -15,7 +22,7 @@ public class OvalPainter implements DrawImage{
         this.color = color;
     }
 
-    public OvalPainter(int x1, int y1, int x2, int y2, int weight, Color color, boolean dashed) {
+    public RectPainter(int x1, int y1, int x2, int y2, int weight, Color color, boolean dashed) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -23,11 +30,6 @@ public class OvalPainter implements DrawImage{
         this.weight = weight;
         this.color = color;
         this.dashed = dashed;
-    }
-
-    public void setEnd(Point p){
-        x2 = p.x;
-        y2 = p.y;
     }
 
     @Override
@@ -40,13 +42,13 @@ public class OvalPainter implements DrawImage{
             g.setStroke(new BasicStroke(weight));
         g.setColor(color);
         if (x2 > x1 && y2 > y1) {
-            g.drawOval(x1, y1, x2 - x1, y2 - y1);
+            g.drawRect(x1, y1, x2 - x1, y2 - y1);
         } else if (x2 > x1 && y2 < y1) {
-            g.drawOval(x1, y2, x2 - x1, y1 - y2);
+            g.drawRect(x1, y2, x2 - x1, y1 - y2);
         } else if (x2 < x1 && y2 > y1) {
-            g.drawOval(x2, y1, x1 - x2, y2 - y1);
+            g.drawRect(x2, y1, x1 - x2, y2 - y1);
         } else if (x2 < x1 && y2 < y1) {
-            g.drawOval(x2, y2, x1 - x2, y1 - y2);
+            g.drawRect(x2, y2, x1 - x2, y1 - y2);
         }
 
     }
