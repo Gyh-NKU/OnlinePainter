@@ -7,7 +7,7 @@ public class LinePainter implements DrawImage {
     private int weight;
     private Color color;
 
-    public void setEnd(Point p){
+    public void setEnd(Point p) {
         x2 = p.x;
         y2 = p.y;
     }
