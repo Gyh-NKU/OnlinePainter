@@ -27,11 +27,10 @@ public class PaintServer {
         for (; ; ) {
             Socket sock = ss.accept();
             sockets.add(sock);
-            System.out.println("获得连接，ip地址： " + ((Socket) sock).getRemoteSocketAddress());
+            System.out.println("获得连接，ip地址： " + (sock).getRemoteSocketAddress());
             System.out.println("当前连接数： " + sockets.size());
             new PaintHandler(sock, sockets, p).start();
         }
-
     }
 }
 

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.sql.*;
 import java.util.logging.Logger;
 //import Net.User;
@@ -24,6 +25,7 @@ public class LoginBoard extends JFrame implements ActionListener {
     JTextField nameField;
     JTextField passwdField;
     JButton enter;
+    JButton enter2;
     JButton register;
     JButton exit;
     String playerName;
@@ -64,9 +66,11 @@ public class LoginBoard extends JFrame implements ActionListener {
         ipPanel = new JPanel(new GridLayout(1, 2));
         namePanel = new JPanel(new GridLayout(1, 2));
         passwdPanel = new JPanel(new GridLayout(1, 2));
-        enter = new JButton("登录");
+        enter = new JButton("画板");
         enter.setVisible(true);
         enter.addActionListener(this);
+        enter2 = new JButton("你画我猜");
+        enter2.addActionListener(this);
         register = new JButton("注册");
         register.setVisible(true);
         register.addActionListener(this);
@@ -80,6 +84,7 @@ public class LoginBoard extends JFrame implements ActionListener {
         passwdPanel.add(passwd);
         passwdPanel.add(passwdField);
         buttons.add(enter);
+        buttons.add(enter2);
         buttons.add(register);
         buttons.add(exit);
         add(ipPanel);
@@ -91,7 +96,7 @@ public class LoginBoard extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == enter) {
+        if (e.getSource() == enter||e.getSource() == enter2) {
             playerName = nameField.getText();
             playerPasswd = passwdField.getText();
             ip = endField.getText();
@@ -111,7 +116,10 @@ public class LoginBoard extends JFrame implements ActionListener {
                                 int id = rs.getInt("user_id");
                                 setTitle("连接中...");
                                 try {
-                                    new OnlineModeSelector(ip, playerName);
+                                    if(e.getSource() == enter)
+                                        new GameFrame(InetAddress.getByName(ip), playerName, 6666, 6667);
+                                    if(e.getSource() == enter2)
+                                        new GameFrame(InetAddress.getByName(ip),playerName,6666,6668);
                                     dispose();
                                     JOptionPane.showMessageDialog(this, "登录成功");
                                 } catch (IOException exp) {
